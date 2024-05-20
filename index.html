@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wowowowowow</title>
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif; /* Cambia esta línea para modificar la fuente */
+            background: url('https://i.imgur.com/rqJoOca.png');
+            background-size: cover; /* Cambia esta línea para modificar el fondo */
+            overflow-x: hidden;
+            position: relative;
+            border: 10px solid;
+            border-image: url(https://i.imgur.com/xaTRPIN.png ) 30 round;
+        }
+
+        p{
+            font-family: "Gochi Hand", cursive;
+            font-size: large;
+  font-style: normal;
+
+        }
+
+
+        /* Título centrado */
+        h1 {
+            font-family: "Lobster Two", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0; /* Inicio oculto para animación */
+            transform: translateX(-100px); /* Inicio fuera de la pantalla a la izquierda */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Transición suave */
+
+        }
+
+        /* Contenedor de la galería */
+        .gallery-container {
+            position: relative;
+            width: 90%;
+            max-width: 400px; /* Tamaño máximo del rectángulo */
+            height: 250px; /* Altura fija del rectángulo */
+            margin: 20px auto;
+            overflow: hidden;
+            border: 2px solid #ccc; /* Borde del rectángulo */
+            border-radius: 10px; /* Esquinas redondeadas */
+            opacity: 0; /* Inicio oculto para animación */
+            transform: translateX(-100px); /* Inicio fuera de la pantalla a la izquierda */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Transición suave */
+
+        }
+
+        /* Estilos para las imágenes de la galería */
+        .gallery {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ajustar imagen dentro del rectángulo */
+        }
+
+        /* Ajuste específico para imágenes con resolución muy alta */
+        .zoom {
+            transform: scale(1); /* Ajusta este valor para hacer zoom */
+        }
+
+        /* Flechas de navegación */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+            padding: 10px;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        /* Párrafo debajo de la galería */
+        .content {
+            padding: 20px;
+            text-align: justify;
+            opacity: 0; /* Inicio oculto para animación */
+            transform: translateX(-100px); /* Inicio fuera de la pantalla a la izquierda */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Transición suave */
+        }
+
+        .qsy {
+            display: flex;
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+
+        .qsy img {
+            max-width: 2000%;
+    width: 2000%;
+    object-fit: contain;
+}
+
+        #counter {
+            text-align: center;
+            font-family: "Gochi Hand", cursive;
+  font-weight: 400;
+  font-style: normal;
+font-size: 2em;
+transition: opacity 1s ease-out, transform 1s ease-out;
+
+}
+#confetti-container {
+            position: fixed; /* Fijar el contenedor de confetti */
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Permitir clics a través del contenedor */
+            overflow: hidden; /* Asegurar que las partículas no causen scroll */
+            z-index: 9999; /* Colocar el contenedor delante del contenido */
+
+        }
+.circle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  z-index: 9999; /* Colocar el contenedor delante del contenido */
+
+}
+
+.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+
+
+        #question-container {
+            display: flex;
+            margin:  -5px auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: "Gochi Hand", italic;
+  font-style: normal;
+    }
+    
+    #question {
+        font-family: "Gochi Hand", italic;
+            font-size: 16;
+  font-style: normal;
+      margin-bottom: 10px;
+    }
+    
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    li {
+        font-size: x-large;
+      margin-bottom: 2px;
+      cursor: pointer;
+    }
+    
+    #submit-btn {
+      display: block;
+      margin: -10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    .correct-answer {
+      color: green !important;
+    }
+
+    .correct-answer:before {
+      content: "✔️";
+      color: green;
+      margin-right: 5px;    }
+
+    .incorrect-answer {
+        
+      color: red !important;
+    }
+
+    .incorrect-answer:before {
+      content: "❌";
+      color: red;
+      margin-right: 5px;
+    }
+    
+    #repeat-btn {
+      display: none;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+  .fecha-establecida {
+    margin-bottom: 20px;
+  }
+  
+  .tiempo-transcurrido {
+    display: flex;
+    justify-content: space-around;
+    opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .tiempo-transcurrido.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+  
+  .unidad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+    margin: 0 10px;
+    text-align: center;
+            font-family: "Gochi Hand", cursive; 
+  }
+  
+  .valor {
+    font-size: 36px;
+    font-weight: bold;
+    animation: contador 1s linear infinite;
+  }
+  
+  @keyframes contador {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+    </style>
+</head>
+<body>
+    <div id="confetti-container"></div>
+
+    <h1>┌─ց Feliz Cumpleaños ց─┐</h1>
+
+    <div class="gallery-container">
+        <div class="gallery">
+            <img src="https://i.imgur.com/NPtYf8b.jpeg" alt="Imagen 1">
+            <img src="https://i.imgur.com/Hist6G0.jpeg" alt="Imagen 2">
+            <img src="https://i.imgur.com/6sQqxVE.jpeg" alt="Imagen 3" class="zoom"> <!-- Imagen con clase 'zoom' -->
+            <img src="https://i.imgur.com/PK8LiOB.png" alt="Imagen 4">
+            <img src="https://i.imgur.com/s4Rmoio.png" alt="Imagen 5">
+            <img src="https://i.imgur.com/WUBzo3A.png" alt="Imagen 6">
+            <img src="https://i.imgur.com/1qC6T5b.png" alt="Imagen 7">
+            <img src="https://i.imgur.com/MiiD3Rz.png" alt="Imagen 8">
+            <img src="https://i.imgur.com/4cMZrMB.png" alt="Imagen 9">
+            <img src="https://i.imgur.com/AUo61WW.png" alt="Imagen 10">
+            <img src="https://i.imgur.com/my6trki.png" alt="Imagen 11">
+            <img src="https://i.imgur.com/U0LjxWC.png" alt="Imagen 12">
+            <img src="https://i.imgur.com/xuReXSX.png" alt="Imagen 13">
+
+        </div>
+        <button class="nav-arrow prev" onclick="prevImage()">&#10094;</button>
+        <button class="nav-arrow next" onclick="nextImage()">&#10095;</button>
+    </div>
+
+    <div class="content"> 
+        <div id="counter">・。✭  0 años . ✭・゜</div>
+        <div class="tiempo-transcurrido">
+          <div class="unidad" id="years">
+            <span class="valor" id="years-valor">0</span>
+            <span class="unidad-texto">Años</span>
+
+          </div>
+          <div class="unidad" id="months">
+            <span class="valor" id="months-valor">0</span>
+            <span class="unidad-texto">Meses</span>
+
+          </div>
+          <div class="unidad" id="weeks">
+            <span class="valor" id="weeks-valor">0</span>
+            <span class="unidad-texto">Semanas</span>
+          </div>
+          <div class="unidad" id="days">
+            <span class="valor" id="days-valor">0</span>
+            <span class="unidad-texto">Días</span>
+          </div>
+          <div class="unidad" id="hours">
+            <span class="valor" id="hours-valor">0</span>
+            <span class="unidad-texto">Horas</span>
+          </div>
+          <div class="unidad" id="minutes">
+            <span class="valor" id="minutes-valor">0</span>
+            <span class="unidad-texto">Minutos</span>
+          </div>
+          <div class="unidad" id="seconds">
+            <span class="valor" id="seconds-valor">0</span>
+            <span class="unidad-texto">Segundos</span>
+          </div>
+        </div>
+        <p>Espero que la pases muy bien con todos a los que vos queres y te quieren, te quiero recordar que sos una de las unicas personas que nunca me voy arrepentir de haber conocido, me diste tantos momentos que no me va a dar el tiempo suficiente en esta y en ninguna otra vida para devolvertelas. Tambien espero que este regalo sea suficiente para hacerte acordar que a veces, sos la <strong>única</strong> amistad que me queda y quiero tener el resto de mis días. Te amo y quiero más de lo que pensas, muy buen feliz cumpleaños Guada♡</p>
+        <br>
+
+
+
+        <div class="qsy">
+            <img src="https://i.imgur.com/6nHEpoj.gif"> </div>
+        <br>
+        <h1>☆゜・・Quiz ・・゜★</h1>
+        
+        <div id="question-container">
+            <h2 id="question"></h2>
+            <ul id="options"></ul>
+            
+          </div>
+          <button id="submit-btn">Apreta la opción correcta</button>
+          <button id="repeat-btn">Repeat Quiz</button>
+        
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <div class="qsy">
+          <img src="https://i.imgur.com/nPSggCT.gif"> </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+
+    </div>
+
+    <script>
+        let currentIndex = 0;
+
+        function showImage(index) {
+            const gallery = document.querySelector('.gallery');
+            const totalImages = document.querySelectorAll('.gallery img').length;
+            if (index >= totalImages) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = totalImages - 1;
+            } else {
+                currentIndex = index;
+            }
+            gallery.style.transform = `translateX(${-currentIndex * 100}%)`;
+        }
+
+        function nextImage() {
+            showImage(currentIndex + 1);
+        }
+
+        function prevImage() {
+            showImage(currentIndex - 1);
+        }
+
+
+
+
+
+
+
+  const fechaInput = document.getElementById('fecha-input');
+  const establecerFechaBtn = document.getElementById('establecer-fecha');
+  
+  const yearsValor = document.getElementById('years-valor');
+  const monthsValor = document.getElementById('months-valor');
+  const weeksValor = document.getElementById('weeks-valor');
+  const daysValor = document.getElementById('days-valor');
+  const hoursValor = document.getElementById('hours-valor');
+  const minutesValor = document.getElementById('minutes-valor');
+  const secondsValor = document.getElementById('seconds-valor');
+  
+    
+  let fechaEstablecida = new Date('2009-05-21T00:00:00'); // Por ejemplo, 1 de enero de 2023
+    actualizarTiempo();
+    setInterval(actualizarTiempo, 1000);
+  
+  function actualizarTiempo() {
+    if (fechaEstablecida) {
+      const ahora = new Date();
+      const diferencia = ahora - fechaEstablecida;
+  
+            const diferenciaAños = ahora.getFullYear() - fechaEstablecida.getFullYear();
+            const diferenciaMeses = ahora.getMonth() - fechaEstablecida.getMonth();
+            const diferenciaDias = ahora.getDate() - fechaEstablecida.getDate();
+            const diferenciaHoras = ahora.getHours() - fechaEstablecida.getHours();
+            const diferenciaMinutos = ahora.getMinutes() - fechaEstablecida.getMinutes();
+            const diferenciaSegundos = ahora.getSeconds() - fechaEstablecida.getSeconds();
+  
+            let años = diferenciaAños;
+            let meses = diferenciaMeses;
+            let dias = diferenciaDias;
+            let horas = diferenciaHoras;
+            let minutos = diferenciaMinutos;
+            let segundos = diferenciaSegundos;
+
+            // Ajuste de los valores negativos
+            if (segundos < 0) {
+                segundos += 60;
+                minutos--;
+            }
+            if (minutos < 0) {
+                minutos += 60;
+                horas--;
+            }
+            if (horas < 0) {
+                horas += 24;
+                dias--;
+            }
+            if (dias < 0) {
+                meses--;
+                const ultimoMes = (ahora.getMonth() + 11) % 12;
+                dias += new Date(ahora.getFullYear(), ultimoMes + 1, 0).getDate();
+            }
+            if (meses < 0) {
+                meses += 12;
+                años--;
+            }
+
+            yearsValor.textContent = años;
+            monthsValor.textContent = meses; // Mostrar meses restantes dentro del año actual
+            weeksValor.textContent = Math.floor(dias / 7);
+            daysValor.textContent = dias % 7;
+            hoursValor.textContent = horas;
+            minutesValor.textContent = minutos;
+            secondsValor.textContent = segundos;
+    }
+  }
+
+
+
+        let count = 0;
+        let counter = document.getElementById("counter");
+        let celebration = document.getElementById("confetti-container");
+        let celebrateTwiceCount = 0;
+        let celebrateAfterTwiceCount = 0;
+        var tiempoo = document.querySelector('.tiempo-transcurrido');
+
+        
+        let interval = setInterval(function() {
+            if (count < 15) {
+                count++;
+                counter.innerHTML = "・。✭ " + count + " años . ✭・゜" ;
+            } else {
+                clearInterval(interval);
+                celebrate();
+                tiempoo.classList.add('show');
+
+            }
+        }, 500);
+        
+        function celebrateTwice() {
+            if (celebrateTwiceCount < 2) {
+                celebrate();
+                celebrateTwiceCount++;
+            }
+        }
+        
+        function celebrateAfterTwice() {
+            if (celebrateAfterTwiceCount < 2 && celebration.childElementCount === 0) {
+                celebrate();
+                celebrateAfterTwiceCount++;
+            }
+        }
+        
+        function celebrate() {
+            let colors = ["red", "orange", "yellow", "green", "blue", "purple"];
+          
+            for (let i = 0; i < 20; i++) {
+                let circle = document.createElement("div");
+                circle.classList.add("circle");
+                let randomColor = colors[Math.floor(Math.random() * colors.length)];
+                circle.style.backgroundColor = randomColor;
+                celebration.appendChild(circle);
+        
+                let x = (window.innerWidth / 2) - (circle.clientWidth / 2);
+                let y = (window.innerHeight / 2) - (circle.clientHeight / 2);
+                let xSpeed = (Math.random() - 0.5) * 7;
+                let ySpeed = -Math.random() * 15 - 20;
+        
+                let circleInterval = setInterval(function() {
+                    x += xSpeed;
+                    y += ySpeed;
+                    ySpeed += 0.5;
+        
+                    circle.style.transform = "translate("  + x + "px, " + y + "px)";
+        
+                    if (y > window.innerHeight /2) {
+                        clearInterval(circleInterval);
+                        celebration.removeChild(circle);
+                        celebrateTwice();
+                        /* celebrateAfterTwice();*/
+                    }
+                },20);
+            }
+        }
+
+
+
+
+
+
+        const questions = [
+      {
+        question: "¿En que mes nos conocimos?",
+        options: ["Febrero", "Marzo", "Enero", "Diciembre"],
+        answer: 2
+      },
+      {
+        question: "¿Quienes nos dejaron mas dolidos?",
+        options: ["Ciro & Cebo", "Mari2g & Innombrable", "Licha & Cebo", "Ciro & Innombrable"],
+        answer: 3
+      },
+      {
+        question: "¿Cuántos meses cumplimos de amistad en Mayo?",
+        options: ["4 Meses", "2 Meses", "3 Meses"],
+        answer: 0
+      },
+      {
+        question: "¿Qué es lo que me gusta y a vos no?",
+        options: ["Puré", "Fideos con tuco", "Hamburguesas", "Waffles"],
+        answer: 1
+      },
+
+      {
+        question: "¿A quienes le sacamos mas el cuero?",
+        options: ["Luci & Abril", "Martuka & Ciro", "Mica & Abril", "Licha & Cebo"],
+        answer: 3
+      },
+      {
+        question: "¿Cúales son nuestros artistas favoritos?",
+        options: ["Ysy A & Duki", "Milo J & Saramalacara", "Dillom & WOS", "Lana del Rey & Ysy a", "Todos ellos"],
+        answer: 4
+      },
+
+      {
+        question: "¿Cuando crees que va a terminar nuestra amistad?",
+        options: ["Mañana", "En unos meses", "En algunos años", "Nunca"],
+        answer: 3
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const submitButton = document.getElementById('submit-btn');
+    const repeatButton = document.getElementById('repeat-btn');
+
+    function loadQuestion() {
+      const question = questions[currentQuestion];
+      questionElement.textContent = question.question;
+
+      optionsElement.innerHTML = '';
+      for (let i = 0; i < question.options.length; i++) {
+        const option = document.createElement('li');
+        option.textContent = question.options[i];
+        option.setAttribute('data-index', i);
+        option.addEventListener('click', selectOption);
+        optionsElement.appendChild(option);
+      }
+    }
+
+    function selectOption(event) {
+      const selectedOption = event.target;
+      const selectedAnswer = parseInt(selectedOption.getAttribute('data-index'));
+      
+      const correctOption = optionsElement.querySelector(`[data-index="${questions[currentQuestion].answer}"]`);
+      
+      if (selectedAnswer === questions[currentQuestion].answer) {
+        selectedOption.classList.add('correct-answer');
+        score++;
+        celebrate()
+      } else {
+        selectedOption.classList.add('incorrect-answer');
+        const options = optionsElement.getElementsByTagName('li');
+        for (let i = 0; i < options.length; i++) {
+          if (i !== questions[currentQuestion].answer) {
+            options[i].classList.add('incorrect-answer');
+          }
+        }
+      }
+
+      disableOptions();
+      showNextQuestion();
+    }
+
+    function disableOptions() {
+      const options = optionsElement.getElementsByTagName('li');
+      for (let i = 0; i < options.length; i++) {
+        options[i].removeEventListener('click', selectOption);
+        options[i].style.cursor = 'default';
+        if (i !== questions[currentQuestion].answer) {
+          options[i].style.color = 'red';
+        }
+      }
+    }
+
+    function showNextQuestion() {
+      currentQuestion++;
+      if (currentQuestion === questions.length) {
+        showResults();
+      } else {
+        submitButton.style.display = 'block';
+        submitButton.textContent = 'Siguiente pregunta';
+        submitButton.addEventListener('click', loadNextQuestion);
+      }
+    }
+
+    function loadNextQuestion() {
+      submitButton.removeEventListener('click', loadNextQuestion);
+      submitButton.style.display = 'none';
+      loadQuestion();
+    }
+
+    function showResults() {
+      questionElement.textContent = `G y G FOREVEEEEEEEEER<3. Tu puntuaje!: ${score}/${questions.length}`;
+      optionsElement.innerHTML = '';
+      repeatButton.style.display = 'block';
+      repeatButton.addEventListener('click', repeatQuiz);
+    }
+
+    function repeatQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      repeatButton.style.display = 'none';
+      loadQuestion();
+    }
+
+    loadQuestion();
+
+
+       document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToAnimate = document.querySelectorAll('h1, .gallery-container, .content, #counter');
+            elementsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+
+
+    </script>
+
+</body>
+</html>
